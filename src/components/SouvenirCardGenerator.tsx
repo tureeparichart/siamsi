@@ -17,6 +17,8 @@ import {
   Share2,
   Check,
   BookOpen,
+  Upload,
+  Image as ImageIcon,
 } from 'lucide-react';
 
 interface SouvenirCardGeneratorProps {
@@ -28,6 +30,7 @@ interface SouvenirCardGeneratorProps {
   themeMode?: ThemeMode;
   cardBgImage?: string | null;
   onSavePermanentCardBg?: (dataUrl: string) => void;
+  onResetPermanentCardBg?: () => void;
 }
 
 // Cached CSS to embed fonts without triggering cross-origin stylesheet reading errors
@@ -71,6 +74,7 @@ export const SouvenirCardGenerator: React.FC<SouvenirCardGeneratorProps> = ({
   themeMode = 'chibi3d',
   cardBgImage,
   onSavePermanentCardBg,
+  onResetPermanentCardBg,
 }) => {
   // Required states as specified in Section 14
   const [firstName, setFirstName] = useState('');
@@ -86,6 +90,21 @@ export const SouvenirCardGenerator: React.FC<SouvenirCardGeneratorProps> = ({
 
   // Ref for the DOM card preview to convert to PNG
   const cardPreviewRef = useRef<HTMLDivElement>(null);
+  const cardFileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleUploadCardImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file && onSavePermanentCardBg) {
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        const dataUrl = evt.target?.result as string;
+        if (dataUrl) {
+          onSavePermanentCardBg(dataUrl);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   // Combined full name
   const fullName = `${firstName} ${lastName}`.trim();
@@ -239,7 +258,7 @@ export const SouvenirCardGenerator: React.FC<SouvenirCardGeneratorProps> = ({
             </div>
 
             {/* Card Live Preview Container */}
-            <div className="w-full p-2 sm:p-4 rounded-2xl bg-[#18110b] border border-[#3b281b] flex items-center justify-center">
+            <div className="w-full p-2 sm:p-4 rounded-2xl bg-[#18110b] border border-[#3b281b] flex flex-col items-center gap-3">
               <SouvenirCardPreview
                 fortune={fortune}
                 fullName={fullName}
@@ -247,6 +266,40 @@ export const SouvenirCardGenerator: React.FC<SouvenirCardGeneratorProps> = ({
                 cardBgImage={cardBgImage}
                 onSavePermanentCardBg={onSavePermanentCardBg}
               />
+
+              {/* Card Background Customization Toolbar */}
+              <div className="w-full flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-[#2d1f14]">
+                <input
+                  type="file"
+                  ref={cardFileInputRef}
+                  onChange={handleUploadCardImage}
+                  accept="image/png,image/jpeg,image/webp,image/svg+xml"
+                  className="hidden"
+                />
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => cardFileInputRef.current?.click()}
+                    className="px-3 py-1.5 rounded-lg text-xs font-medium text-[#ffd54f] bg-[#291b11] hover:bg-[#3d2919] border border-[#c5a059]/40 flex items-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>เปลี่ยนภาพพื้นหลังการ์ด</span>
+                  </button>
+                  {cardBgImage && !cardBgImage.includes('sukhothai-card-bg.svg') && onResetPermanentCardBg && (
+                    <button
+                      type="button"
+                      onClick={onResetPermanentCardBg}
+                      className="px-3 py-1.5 rounded-lg text-xs font-medium text-[#fca5a5] hover:bg-[#3f1c1c] border border-red-500/30 flex items-center gap-1.5 transition-colors cursor-pointer"
+                    >
+                      <RotateCcw className="w-3.5 h-3.5" />
+                      <span>คืนค่าเดิม</span>
+                    </button>
+                  )}
+                </div>
+                <span className="text-[11px] text-[#a89582] hidden sm:inline">
+                  ลากรูปมาวางบนการ์ด หรือกดปุ่มนี้เพื่อเปลี่ยนภาพ
+                </span>
+              </div>
             </div>
 
             {/* Primary Action Buttons: Print & Save Image */}

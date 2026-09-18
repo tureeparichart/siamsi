@@ -12,7 +12,18 @@ import { SouvenirCardGenerator } from './components/SouvenirCardGenerator';
 import { AllFortunes } from './components/AllFortunes';
 import { SukhothaiAtmosphereBackground } from './components/SukhothaiAtmosphereBackground';
 import { MascotFloatingCompanion } from './components/MascotKnowledgeBar';
-import { loadPermanentCardBg, savePermanentCardBg } from './utils/imageStorage';
+import {
+  loadPermanentCardBg,
+  savePermanentCardBg,
+  removePermanentCardBg,
+  loadWebsiteBg,
+  saveWebsiteBg,
+  removeWebsiteBg,
+  loadCustomLogo,
+  saveCustomLogo,
+  removeCustomLogo,
+  detectFirstAvailableImage,
+} from './utils/imageStorage';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<PageView>('home');
@@ -22,7 +33,11 @@ export default function App() {
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
   const themeMode: ThemeMode = 'chibi3d';
 
-  // Custom user-uploaded background image state with localStorage support
+  // Base prefix for assets (supports relative path on GitHub Pages)
+  const basePrefix = import.meta.env.BASE_URL || './';
+  const cleanBase = basePrefix.endsWith('/') ? basePrefix : `${basePrefix}/`;
+
+  // Custom user-uploaded background image state
   const [customBgImage, setCustomBgImage] = useState<string | null>(() => {
     try {
       return localStorage.getItem('sukhothai_custom_bg');
@@ -31,7 +46,7 @@ export default function App() {
     }
   });
 
-  // Custom user-uploaded logo image state with localStorage support
+  // Custom user-uploaded logo image state
   const [customLogoImage, setCustomLogoImage] = useState<string | null>(() => {
     try {
       return localStorage.getItem('sukhothai_custom_logo');
@@ -40,81 +55,159 @@ export default function App() {
     }
   });
 
+  // Permanent souvenir card background image
+  const FALLBACK_CARD_BG_PATH = `${cleanBase}assets/sukhothai-card-bg.svg`;
+  const [cardBgImage, setCardBgImage] = useState<string>(FALLBACK_CARD_BG_PATH);
+
+  // Initialize and auto-detect background, logo, and card assets
+  useEffect(() => {
+    const initAssets = async () => {
+      // 1. Website Background: Check IndexedDB -> localStorage -> Static files
+      const savedBg = await loadWebsiteBg();
+      if (savedBg) {
+        setCustomBgImage(savedBg);
+      } else {
+        const websiteBgCandidates = [
+          `${cleanBase}assets/website-bg.png`,
+          `${cleanBase}assets/website-bg.jpg`,
+          `${cleanBase}assets/website-bg.jpeg`,
+          `${cleanBase}assets/website-bg.webp`,
+          `${cleanBase}assets/sukhothai-bg.png`,
+          `${cleanBase}assets/sukhothai-bg.jpg`,
+          `${cleanBase}assets/sukhothai-bg.jpeg`,
+          `${cleanBase}assets/sukhothai-bg.webp`,
+          `${cleanBase}assets/background.png`,
+          `${cleanBase}assets/background.jpg`,
+          `${cleanBase}assets/background.jpeg`,
+          `${cleanBase}assets/background.webp`,
+          `${cleanBase}assets/bg.png`,
+          `${cleanBase}assets/bg.jpg`,
+          `${cleanBase}assets/bg.jpeg`,
+          `${cleanBase}assets/bg.webp`,
+          `${cleanBase}website-bg.png`,
+          `${cleanBase}website-bg.jpg`,
+          `${cleanBase}website-bg.webp`,
+          `${cleanBase}sukhothai-bg.png`,
+          `${cleanBase}sukhothai-bg.jpg`,
+          `${cleanBase}sukhothai-bg.webp`,
+          `${cleanBase}background.png`,
+          `${cleanBase}background.jpg`,
+          `${cleanBase}background.webp`,
+          `${cleanBase}bg.png`,
+          `${cleanBase}bg.jpg`,
+          `${cleanBase}bg.webp`,
+        ];
+        const detectedBg = await detectFirstAvailableImage(websiteBgCandidates);
+        if (detectedBg) {
+          setCustomBgImage(detectedBg);
+        }
+      }
+
+      // 2. Custom Logo: Check IndexedDB -> localStorage -> Static files
+      const savedLogo = await loadCustomLogo();
+      if (savedLogo) {
+        setCustomLogoImage(savedLogo);
+      } else {
+        const logoCandidates = [
+          `${cleanBase}assets/custom-logo.png`,
+          `${cleanBase}assets/custom-logo.jpg`,
+          `${cleanBase}assets/custom-logo.svg`,
+          `${cleanBase}assets/custom-logo.webp`,
+          `${cleanBase}assets/logo.png`,
+          `${cleanBase}assets/logo.jpg`,
+          `${cleanBase}assets/logo.svg`,
+          `${cleanBase}assets/logo.webp`,
+          `${cleanBase}custom-logo.png`,
+          `${cleanBase}custom-logo.jpg`,
+          `${cleanBase}custom-logo.svg`,
+          `${cleanBase}custom-logo.webp`,
+          `${cleanBase}logo.png`,
+          `${cleanBase}logo.jpg`,
+          `${cleanBase}logo.svg`,
+          `${cleanBase}logo.webp`,
+        ];
+        const detectedLogo = await detectFirstAvailableImage(logoCandidates);
+        if (detectedLogo) {
+          setCustomLogoImage(detectedLogo);
+        }
+      }
+
+      // 3. Card Background: Check IndexedDB -> localStorage -> Static files
+      const savedCardBg = await loadPermanentCardBg();
+      if (savedCardBg) {
+        setCardBgImage(savedCardBg);
+      } else {
+        const cardBgCandidates = [
+          `${cleanBase}assets/sukhothai-card-bg.png`,
+          `${cleanBase}assets/sukhothai-card-bg.jpg`,
+          `${cleanBase}assets/sukhothai-card-bg.jpeg`,
+          `${cleanBase}assets/sukhothai-card-bg.webp`,
+          `${cleanBase}assets/card-bg.png`,
+          `${cleanBase}assets/card-bg.jpg`,
+          `${cleanBase}assets/card-bg.jpeg`,
+          `${cleanBase}assets/card-bg.webp`,
+          `${cleanBase}sukhothai-card-bg.png`,
+          `${cleanBase}sukhothai-card-bg.jpg`,
+          `${cleanBase}sukhothai-card-bg.jpeg`,
+          `${cleanBase}sukhothai-card-bg.webp`,
+          `${cleanBase}card-bg.png`,
+          `${cleanBase}card-bg.jpg`,
+          `${cleanBase}card-bg.jpeg`,
+          `${cleanBase}card-bg.webp`,
+        ];
+        const detectedCard = await detectFirstAvailableImage(cardBgCandidates);
+        if (detectedCard) {
+          setCardBgImage(detectedCard);
+        }
+      }
+    };
+
+    initAssets();
+  }, [cleanBase]);
+
   const handleUploadCustomBg = useCallback((file: File) => {
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
       const dataUrl = e.target?.result as string;
       if (dataUrl) {
         setCustomBgImage(dataUrl);
-        try {
-          localStorage.setItem('sukhothai_custom_bg', dataUrl);
-        } catch {
-          // localStorage quota or privacy restrictions
-        }
+        await saveWebsiteBg(dataUrl);
       }
     };
     reader.readAsDataURL(file);
   }, []);
 
-  const handleResetCustomBg = useCallback(() => {
+  const handleResetCustomBg = useCallback(async () => {
     setCustomBgImage(null);
-    try {
-      localStorage.removeItem('sukhothai_custom_bg');
-    } catch {}
+    await removeWebsiteBg();
   }, []);
 
   const handleUploadCustomLogo = useCallback((file: File) => {
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
       const dataUrl = e.target?.result as string;
       if (dataUrl) {
         setCustomLogoImage(dataUrl);
-        try {
-          localStorage.setItem('sukhothai_custom_logo', dataUrl);
-        } catch {
-          // localStorage quota or privacy restrictions
-        }
+        await saveCustomLogo(dataUrl);
       }
     };
     reader.readAsDataURL(file);
   }, []);
 
-  const handleResetCustomLogo = useCallback(() => {
+  const handleResetCustomLogo = useCallback(async () => {
     setCustomLogoImage(null);
-    try {
-      localStorage.removeItem('sukhothai_custom_logo');
-    } catch {}
+    await removeCustomLogo();
   }, []);
-
-  // Permanent souvenir card background image (Sukhothai Wat Mahathat & Heritage landscape - ล็อกถาวร)
-  const basePrefix = import.meta.env.BASE_URL || './';
-  const FALLBACK_CARD_BG_PATH = `${basePrefix}assets/sukhothai-card-bg.svg`;
-  const [cardBgImage, setCardBgImage] = useState<string>(FALLBACK_CARD_BG_PATH);
-
-  useEffect(() => {
-    // Attempt loading permanent saved background from IndexedDB or static file
-    const initBg = async () => {
-      const saved = await loadPermanentCardBg();
-      if (saved) {
-        setCardBgImage(saved);
-        return;
-      }
-      // Check if user has uploaded static file to /assets/sukhothai-card-bg.png
-      const pngPath = `${basePrefix}assets/sukhothai-card-bg.png`;
-      const testImg = new Image();
-      testImg.onload = () => setCardBgImage(pngPath);
-      testImg.onerror = () => {
-        // keep fallback
-      };
-      testImg.src = pngPath;
-    };
-    initBg();
-  }, [basePrefix]);
 
   const handleSavePermanentCardBg = useCallback(async (dataUrl: string) => {
     setCardBgImage(dataUrl);
     await savePermanentCardBg(dataUrl);
   }, []);
+
+  const handleResetPermanentCardBg = useCallback(async () => {
+    setCardBgImage(FALLBACK_CARD_BG_PATH);
+    await removePermanentCardBg();
+  }, [FALLBACK_CARD_BG_PATH]);
 
   // Mission state tracking per session
   const [missionState, setMissionState] = useState<MissionState>({
@@ -224,6 +317,9 @@ export default function App() {
         customLogoImage={customLogoImage}
         onUploadLogo={handleUploadCustomLogo}
         onResetLogo={handleResetCustomLogo}
+        cardBgImage={cardBgImage}
+        onUploadCardBg={handleSavePermanentCardBg}
+        onResetCardBg={handleResetPermanentCardBg}
       />
 
       {/* Main Content Area */}
@@ -287,6 +383,7 @@ export default function App() {
             themeMode={themeMode}
             cardBgImage={cardBgImage}
             onSavePermanentCardBg={handleSavePermanentCardBg}
+            onResetPermanentCardBg={handleResetPermanentCardBg}
           />
         )}
 
