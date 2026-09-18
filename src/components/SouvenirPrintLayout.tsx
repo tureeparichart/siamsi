@@ -17,6 +17,8 @@ interface SouvenirPrintLayoutProps {
   cardBgImage?: string | null;
 }
 
+const defaultBg = `${import.meta.env.BASE_URL || './'}assets/sukhothai-card-bg.svg`;
+
 // Single card template formatted specifically for physical printing
 const PrintedCard: React.FC<{
   fortune: Fortune;
@@ -25,10 +27,10 @@ const PrintedCard: React.FC<{
 }> = ({
   fortune,
   fullName,
-  cardBgImage = '/assets/sukhothai-card-bg.svg',
+  cardBgImage,
 }) => {
   const displayName = fullName.trim() || 'ชื่อ นามสกุล ของท่าน';
-  const activeBg = cardBgImage || '/assets/sukhothai-card-bg.svg';
+  const activeBg = cardBgImage || defaultBg;
 
   // Dynamic font sizing for print (2 lines) - enlarged for prominence and clarity
   const getPhoKhunRamFontSize = (len: number) => {

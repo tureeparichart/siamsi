@@ -22,7 +22,9 @@
 /* Sukhothai Inscription Font Support (PhoKhunRam) */
 @font-face {
   font-family: 'PhoKhunRam';
-  src: url('/fonts/PhoKhunRam.ttf') format('truetype'),
+  src: url('../fonts/PhoKhunRam.ttf') format('truetype'),
+       url('./fonts/PhoKhunRam.ttf') format('truetype'),
+       url('/fonts/PhoKhunRam.ttf') format('truetype'),
        url('/fonts/phokhunram.ttf') format('truetype'),
        local('PhoKhunRam'),
        local('Pho Khun Ram');

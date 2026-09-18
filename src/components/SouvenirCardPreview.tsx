@@ -15,14 +15,16 @@ interface SouvenirCardPreviewProps {
   onSavePermanentCardBg?: (dataUrl: string) => void;
 }
 
+const defaultBg = `${import.meta.env.BASE_URL || './'}assets/sukhothai-card-bg.svg`;
+
 export const SouvenirCardPreview: React.FC<SouvenirCardPreviewProps> = ({
   fortune,
   fullName,
   previewRef,
-  cardBgImage = '/assets/sukhothai-card-bg.svg',
+  cardBgImage,
   onSavePermanentCardBg,
 }) => {
-  const activeBg = cardBgImage || '/assets/sukhothai-card-bg.svg';
+  const activeBg = cardBgImage || defaultBg;
   const [isDragging, setIsDragging] = useState(false);
 
   // Display name or placeholder

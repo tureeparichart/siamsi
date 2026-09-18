@@ -87,7 +87,8 @@ export default function App() {
   }, []);
 
   // Permanent souvenir card background image (Sukhothai Wat Mahathat & Heritage landscape - ล็อกถาวร)
-  const FALLBACK_CARD_BG_PATH = '/assets/sukhothai-card-bg.svg';
+  const basePrefix = import.meta.env.BASE_URL || './';
+  const FALLBACK_CARD_BG_PATH = `${basePrefix}assets/sukhothai-card-bg.svg`;
   const [cardBgImage, setCardBgImage] = useState<string>(FALLBACK_CARD_BG_PATH);
 
   useEffect(() => {
@@ -99,15 +100,16 @@ export default function App() {
         return;
       }
       // Check if user has uploaded static file to /assets/sukhothai-card-bg.png
+      const pngPath = `${basePrefix}assets/sukhothai-card-bg.png`;
       const testImg = new Image();
-      testImg.onload = () => setCardBgImage('/assets/sukhothai-card-bg.png');
+      testImg.onload = () => setCardBgImage(pngPath);
       testImg.onerror = () => {
         // keep fallback
       };
-      testImg.src = '/assets/sukhothai-card-bg.png';
+      testImg.src = pngPath;
     };
     initBg();
-  }, []);
+  }, [basePrefix]);
 
   const handleSavePermanentCardBg = useCallback(async (dataUrl: string) => {
     setCardBgImage(dataUrl);

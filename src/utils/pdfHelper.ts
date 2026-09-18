@@ -7,7 +7,9 @@ let cachedFontEmbedCSS: string | null = null;
 async function getCardFontEmbedCSS(): Promise<string> {
   if (cachedFontEmbedCSS !== null) return cachedFontEmbedCSS;
   try {
-    const res = await fetch('/fonts/PhoKhunRam.ttf');
+    const base = import.meta.env.BASE_URL || './';
+    const fontPath = `${base.endsWith('/') ? base : base + '/'}fonts/PhoKhunRam.ttf`;
+    const res = await fetch(fontPath);
     if (!res.ok) throw new Error('Failed to fetch font');
     const blob = await res.blob();
     const base64 = await new Promise<string>((resolve) => {
