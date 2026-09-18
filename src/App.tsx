@@ -299,8 +299,8 @@ export default function App() {
         )}
       </main>
 
-      {/* Exhibition Footer */}
-      <Footer />
+      {/* Exhibition Footer (ซ่อนเฉพาะหน้าสั่งพิมพ์การ์ดที่ระลึกตามคำขอ) */}
+      {currentPage !== 'souvenir' && <Footer />}
 
       {/* Floating Interactive Mascot Guide (มีให้แตะฟังเกร็ดความรู้ทุกหน้า) */}
       <MascotFloatingCompanion />

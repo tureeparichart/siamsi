@@ -290,7 +290,7 @@ export const SouvenirPrintLayout: React.FC<SouvenirPrintLayoutProps> = ({
   return (
     <>
       {/* Target for Single Card Printing */}
-      <div id="print-target-single" className="hidden">
+      <div id="print-target-single" className="print-only-target">
         <PrintedCard
           fortune={fortune}
           fullName={fullName}
@@ -299,7 +299,7 @@ export const SouvenirPrintLayout: React.FC<SouvenirPrintLayoutProps> = ({
       </div>
 
       {/* Target for Multi-card A4 Printing (8 cards layout on A4 with cut lines) */}
-      <div id="print-target-a4" className="hidden">
+      <div id="print-target-a4" className="print-only-target">
         <div
           style={{
             width: '190mm',

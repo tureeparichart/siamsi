@@ -7,6 +7,7 @@ import { NameForm } from './NameForm';
 import { SouvenirCardPreview } from './SouvenirCardPreview';
 import { PrintMode } from './PrintOptions';
 import { SouvenirPrintLayout } from './SouvenirPrintLayout';
+import { PrintModal } from './PrintModal';
 import { ThaiCornerOrnament, SukhothaiLotus } from './SukhothaiMotifs';
 import {
   Printer,
@@ -29,6 +30,36 @@ interface SouvenirCardGeneratorProps {
   onSavePermanentCardBg?: (dataUrl: string) => void;
 }
 
+// Cached CSS to embed fonts without triggering cross-origin stylesheet reading errors
+let cachedFontEmbedCSS: string | null = null;
+
+async function getCardFontEmbedCSS(): Promise<string> {
+  if (cachedFontEmbedCSS !== null) return cachedFontEmbedCSS;
+  try {
+    const res = await fetch('/fonts/PhoKhunRam.ttf');
+    if (!res.ok) throw new Error('Failed to fetch font');
+    const blob = await res.blob();
+    const base64 = await new Promise<string>((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.readAsDataURL(blob);
+    });
+    cachedFontEmbedCSS = `
+      @font-face {
+        font-family: 'PhoKhunRam';
+        src: url('${base64}') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+      }
+    `;
+    return cachedFontEmbedCSS;
+  } catch (e) {
+    console.warn('Could not load base64 font for export:', e);
+    cachedFontEmbedCSS = ' ';
+    return cachedFontEmbedCSS;
+  }
+}
+
 export const SouvenirCardGenerator: React.FC<SouvenirCardGeneratorProps> = ({
   fortune,
   onDrawAgain,
@@ -44,6 +75,7 @@ export const SouvenirCardGenerator: React.FC<SouvenirCardGeneratorProps> = ({
   const [lastName, setLastName] = useState('');
   const [showSouvenir, setShowSouvenir] = useState(false);
   const [printMode, setPrintMode] = useState<PrintMode>('single');
+  const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
 
   // Export and share states
   const [isSavingImage, setIsSavingImage] = useState(false);
@@ -70,25 +102,10 @@ export const SouvenirCardGenerator: React.FC<SouvenirCardGeneratorProps> = ({
     }
   };
 
-  // Section 8: Print handler using window.print() and tailored printMode classes
+  // Section 8: Print handler opening rich PrintModal with direct print, new-tab print, and image export options
   const handlePrint = () => {
     soundFx.playBellChime();
-
-    // Add designated print mode class to document body
-    document.body.classList.remove('print-mode-single', 'print-mode-a4');
-    document.body.classList.add(printMode === 'single' ? 'print-mode-single' : 'print-mode-a4');
-
-    // Clean up class after print window closes
-    const handleAfterPrint = () => {
-      document.body.classList.remove('print-mode-single', 'print-mode-a4');
-      window.removeEventListener('afterprint', handleAfterPrint);
-    };
-    window.addEventListener('afterprint', handleAfterPrint);
-
-    // Give browser a microtick to evaluate styles
-    setTimeout(() => {
-      window.print();
-    }, 150);
+    setIsPrintModalOpen(true);
   };
 
   // Section 10: Save card as high-definition PNG image
@@ -99,11 +116,16 @@ export const SouvenirCardGenerator: React.FC<SouvenirCardGeneratorProps> = ({
       setIsSavingImage(true);
       soundFx.playBellChime();
 
+      // Pre-fetch embedded font CSS so html-to-image never needs to inspect remote cross-origin stylesheets
+      const fontEmbedCSS = await getCardFontEmbedCSS();
+
       // High quality pixel ratio for crisp typography and ornaments
       const dataUrl = await toPng(cardPreviewRef.current, {
         cacheBust: true,
         pixelRatio: 3,
         backgroundColor: '#fdfaf2',
+        fontEmbedCSS: fontEmbedCSS || ' ',
+        skipFonts: true,
       });
 
       // Sanitize user name for filename: Sukhothai-Fortune-01-ชื่อผู้ใช้.png
@@ -303,6 +325,19 @@ export const SouvenirCardGenerator: React.FC<SouvenirCardGeneratorProps> = ({
         fullName={fullName}
         printMode={printMode}
         cardBgImage={cardBgImage}
+      />
+
+      {/* Interactive Print Options & Actions Modal */}
+      <PrintModal
+        isOpen={isPrintModalOpen}
+        onClose={() => setIsPrintModalOpen(false)}
+        printMode={printMode}
+        onChangePrintMode={setPrintMode}
+        onSaveImage={handleSaveImage}
+        isSavingImage={isSavingImage}
+        fullName={fullName}
+        fortuneNumber={fortune.numberStr}
+        cardElementRef={cardPreviewRef}
       />
     </div>
   );
