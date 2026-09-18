@@ -1,16 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'motion/react';
 import { Fortune, ThemeMode } from '../types';
 import { BookOpen, Sparkles, Award, RotateCcw, Quote, Compass } from 'lucide-react';
-import { ThaiCornerOrnament, SangkhalokFish, SukhothaiLotus } from './SukhothaiMotifs';
-import {
-  MascotStele,
-  MascotPrince,
-  MascotPrincess,
-  MascotSangkhalok,
-  MascotRoyalElephant,
-} from './SukhothaiMascots';
-import { MASCOT_KNOWLEDGE_LIST } from '../data/mascotKnowledge';
+import { ThaiCornerOrnament, SukhothaiLotus } from './SukhothaiMotifs';
 
 interface FortuneResultProps {
   fortune: Fortune;
@@ -29,20 +21,7 @@ export const FortuneResult: React.FC<FortuneResultProps> = ({
   onOpenSouvenir,
   onDrawAgain,
   onBrowseAll,
-  themeMode = 'chibi3d',
 }) => {
-  const [flipped, setFlipped] = useState(true);
-  const [showMascotBubble, setShowMascotBubble] = useState(true);
-  const [mascotIndex, setMascotIndex] = useState(0);
-
-  // Relevant mascot knowledge matching the category or cycle
-  const currentMascot = MASCOT_KNOWLEDGE_LIST[mascotIndex % MASCOT_KNOWLEDGE_LIST.length];
-
-  const handleNextMascot = () => {
-    setMascotIndex((prev) => (prev + 1) % MASCOT_KNOWLEDGE_LIST.length);
-    setShowMascotBubble(true);
-  };
-
   return (
     <div className="w-full max-w-5xl mx-auto py-6 sm:py-10 px-4 flex flex-col items-center">
       {/* Top Banner Indicator */}
@@ -62,8 +41,8 @@ export const FortuneResult: React.FC<FortuneResultProps> = ({
         </div>
       </motion.div>
 
-      {/* Main Content Area: Card in Center + น้องสุโขทัย แทรกอยู่ด้านข้าง */}
-      <div className="w-full flex flex-col lg:flex-row items-center lg:items-start justify-center gap-6 my-2">
+      {/* Main Content Area: Card in Center */}
+      <div className="w-full flex justify-center my-2">
         {/* 3D Flipping Fortune Card */}
         <div className="w-full max-w-xl perspective-1000">
         <motion.div
@@ -150,82 +129,6 @@ export const FortuneResult: React.FC<FortuneResultProps> = ({
             </div>
           </div>
         </motion.div>
-        </div>
-
-        {/* Interactive 3D Mascot Companion on the side with speech bubble */}
-        <div className="w-full lg:w-80 flex flex-col items-center">
-          {/* Mascot speech bubble */}
-          {showMascotBubble && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              className="relative w-full bg-gradient-to-b from-[#2b1e15] to-[#1a100a] border-2 border-[#d4af37] rounded-2xl p-4 shadow-xl text-left mb-3"
-            >
-              {/* Bubble pointer */}
-              <div className="hidden lg:block absolute -left-2 top-10 w-4 h-4 rotate-45 bg-[#2b1e15] border-l-2 border-b-2 border-[#d4af37]" />
-              <div className="lg:hidden absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 rotate-45 bg-[#1a100a] border-r-2 border-b-2 border-[#d4af37]" />
-
-              <div className="flex items-center justify-between gap-1 pb-1.5 mb-1.5 border-b border-[#453120]">
-                <span className="font-thai-serif text-xs font-bold text-gold-gradient flex items-center gap-1">
-                  💬 {currentMascot.name} ชวนรู้
-                </span>
-                <span className="text-[10px] text-[#baa592] bg-[#120a05] px-2 py-0.5 rounded-full border border-[#3e2c1d]">
-                  {currentMascot.role}
-                </span>
-              </div>
-
-              <p className="font-thai-serif text-xs sm:text-[13px] text-[#fffaed] leading-relaxed italic mb-2">
-                {currentMascot.quote}
-              </p>
-
-              <div className="p-2 bg-[#140b06] rounded-xl border border-[#3e2b1d] text-xs text-[#d8c7b4] leading-snug space-y-1">
-                <span className="text-[#ffd54f] font-semibold block text-[11px]">💡 เกร็ดประวัติศาสตร์:</span>
-                <p>{currentMascot.facts[0]}</p>
-              </div>
-
-              <div className="mt-2 pt-2 border-t border-[#453120] flex items-center justify-between text-[11px]">
-                <button
-                  onClick={handleNextMascot}
-                  className="text-[#ffd54f] hover:text-white font-medium cursor-pointer underline underline-offset-2"
-                >
-                  ชวนเพื่อนมาสคอตตัวอื่นมาเล่า →
-                </button>
-                <button
-                  onClick={() => setShowMascotBubble(false)}
-                  className="text-[#8e7b68] hover:text-[#d4af37] cursor-pointer"
-                >
-                  ซ่อนบับเบิล
-                </button>
-              </div>
-            </motion.div>
-          )}
-
-          {/* Clickable 3D Mascot Character */}
-          <button
-            onClick={() => {
-              if (!showMascotBubble) {
-                setShowMascotBubble(true);
-              } else {
-                handleNextMascot();
-              }
-            }}
-            className="group relative flex flex-col items-center cursor-pointer transform hover:scale-105 transition-transform"
-            aria-label={`มาสคอต ${currentMascot.name}`}
-          >
-            <div className="w-28 h-28 sm:w-36 sm:h-36 drop-shadow-[0_10px_20px_rgba(0,0,0,0.7)] animate-bounce-gentle">
-              {currentMascot.avatarType === 'stele' && <MascotStele className="w-full h-full" />}
-              {currentMascot.avatarType === 'prince' && <MascotPrince className="w-full h-full" />}
-              {currentMascot.avatarType === 'princess' && <MascotPrincess className="w-full h-full" />}
-              {currentMascot.avatarType === 'sangkhalok' && <MascotSangkhalok className="w-full h-full" />}
-              {currentMascot.avatarType === 'elephant' && <MascotRoyalElephant className="w-full h-full" />}
-              {currentMascot.avatarType === 'siamsi' && <MascotStele className="w-full h-full" />}
-            </div>
-
-            <div className="mt-1 px-3 py-1 rounded-full bg-[#1e130c] border border-[#d4af37]/60 text-xs text-[#ffd54f] font-thai-serif font-bold shadow-md group-hover:bg-[#d4af37] group-hover:text-[#1b120c] transition-colors flex items-center gap-1">
-              <span>แตะตัวฉันเพื่อฟังเกร็ดความรู้</span>
-              <Sparkles className="w-3 h-3" />
-            </div>
-          </button>
         </div>
       </div>
 
