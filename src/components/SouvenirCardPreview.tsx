@@ -62,21 +62,21 @@ export const SouvenirCardPreview: React.FC<SouvenirCardPreviewProps> = ({
     }
   };
 
-  // Responsive font sizing based on user name length
+  // Responsive font sizing for user name in horizontal card (5.4 × 8.8 cm)
   const getPhoKhunRamFontSize = (len: number) => {
-    if (len > 35) return '15px';
-    if (len > 25) return '18px';
-    if (len > 18) return '21px';
-    if (len > 12) return '25px';
-    return '28px';
+    if (len > 35) return 'clamp(11px, 2.8vw, 15px)';
+    if (len > 25) return 'clamp(13px, 3.2vw, 18px)';
+    if (len > 18) return 'clamp(15px, 3.7vw, 21px)';
+    if (len > 12) return 'clamp(17px, 4.3vw, 25px)';
+    return 'clamp(19px, 5vw, 28px)';
   };
 
   const getRegularFontSize = (len: number) => {
-    if (len > 35) return '12px';
-    if (len > 25) return '14px';
-    if (len > 18) return '16px';
-    if (len > 12) return '18px';
-    return '20px';
+    if (len > 35) return 'clamp(9px, 2vw, 11px)';
+    if (len > 25) return 'clamp(10px, 2.2vw, 13px)';
+    if (len > 18) return 'clamp(11px, 2.5vw, 15px)';
+    if (len > 12) return 'clamp(12px, 2.9vw, 17px)';
+    return 'clamp(13px, 3.3vw, 19px)';
   };
 
   const phoKhunRamFontSize = getPhoKhunRamFontSize(displayName.length);
@@ -86,8 +86,8 @@ export const SouvenirCardPreview: React.FC<SouvenirCardPreviewProps> = ({
     <div className="w-full flex flex-col items-center select-none">
       {/* 
         Sukhothai Horizontal Souvenir Card
-        True standard size: 8.8 cm × 5.4 cm (ratio 1.63)
-        Rendered responsively in high-definition preview with Sukhothai Heritage Style
+        True standard size: 8.8 cm wide × 5.4 cm high (ratio 88:54 ≈ 1.6296)
+        Rendered responsively in exact horizontal proportions
       */}
       <div
         ref={previewRef}
@@ -95,7 +95,7 @@ export const SouvenirCardPreview: React.FC<SouvenirCardPreviewProps> = ({
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`souvenir-card relative w-full max-w-[530px] min-h-[300px] sm:min-h-[330px] aspect-[88/54] rounded-xl text-[#2c1810] p-2.5 sm:p-3.5 flex flex-col justify-between border-[3px] border-[#8c6d23] shadow-2xl overflow-hidden transition-all duration-300 ${
+        className={`souvenir-card relative w-full max-w-[528px] aspect-[88/54] rounded-xl text-[#2c1810] p-2 sm:p-3 md:p-3.5 flex flex-col justify-between border-[2.5px] sm:border-[3px] border-[#8c6d23] shadow-2xl overflow-hidden transition-all duration-300 ${
           isDragging ? 'ring-4 ring-[#ffd54f] scale-[1.01]' : ''
         }`}
         style={{

@@ -245,11 +245,16 @@ export const SouvenirCardGenerator: React.FC<SouvenirCardGeneratorProps> = ({
 
           {/* Right Column: Real-time Live Preview & Actions (7 Cols on large screens) */}
           <div id="card-preview-container" className="lg:col-span-7 space-y-6 flex flex-col items-center">
-            <div className="w-full flex items-center justify-between">
-              <span className="text-xs font-semibold text-[#e8d5bf] flex items-center gap-1.5">
-                <SukhothaiLotus className="w-4 h-4 text-[#d4af37]" />
-                <span>ตัวอย่างการ์ดจริง (Live Preview):</span>
-              </span>
+            <div className="w-full flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-semibold text-[#e8d5bf] flex items-center gap-1.5">
+                  <SukhothaiLotus className="w-4 h-4 text-[#d4af37]" />
+                  <span>ตัวอย่างการ์ดแนวนอน:</span>
+                </span>
+                <span className="px-2 py-0.5 rounded-md bg-[#2d1e14] border border-[#c5a059]/50 text-[11px] font-semibold text-[#ffd54f] shadow-xs">
+                  📐 5.4 × 8.8 ซม. (แนวนอน)
+                </span>
+              </div>
               {fullName && (
                 <span className="text-[11px] text-[#81c784] font-medium flex items-center gap-1">
                   <Check className="w-3.5 h-3.5" /> อัปเดตตามชื่อทันที

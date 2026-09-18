@@ -115,7 +115,7 @@ export const PrintModal: React.FC<PrintModalProps> = ({
               <span>1. เลือกรูปแบบการพิมพ์:</span>
               <span className="text-[11px] text-[#baa592]">
                 {printMode === 'single'
-                  ? 'ขนาด 8.8 × 5.4 ซม. (มาตรฐาน)'
+                  ? 'ขนาดแนวนอน 5.4 × 8.8 ซม. (มาตรฐาน)'
                   : 'กระดาษ A4 (8 ใบบนหน้าเดียว)'}
               </span>
             </label>
@@ -137,14 +137,14 @@ export const PrintModal: React.FC<PrintModalProps> = ({
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-[#f5ecd8]">
-                      พิมพ์การ์ด 1 ใบ
+                      พิมพ์การ์ด 1 ใบ (แนวนอน)
                     </span>
                     {printMode === 'single' && (
                       <Check className="w-4 h-4 text-[#d4af37]" />
                     )}
                   </div>
                   <p className="text-[11px] text-[#baa592] mt-0.5">
-                    ขนาดจริง 8.8 × 5.4 ซม. สำหรับใส่ซองหรือกระเป๋า
+                    ขนาดจริงแนวนอน 5.4 × 8.8 ซม. สำหรับใส่ซองหรือกระเป๋า
                   </p>
                 </div>
               </button>

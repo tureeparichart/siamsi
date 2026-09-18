@@ -19,7 +19,7 @@ export const PrintOptions: React.FC<PrintOptionsProps> = ({
           <span>รูปแบบการพิมพ์:</span>
         </span>
         <span className="text-[11px] text-[#9e8b7a]">
-          {printMode === 'single' ? 'ขนาด 8.8 × 5.4 ซม.' : 'จัดเรียง 8 ใบบนกระดาษ A4'}
+          {printMode === 'single' ? 'ขนาดแนวนอน 5.4 × 8.8 ซม.' : 'จัดเรียง 8 ใบบนกระดาษ A4'}
         </span>
       </div>
 
@@ -39,11 +39,11 @@ export const PrintOptions: React.FC<PrintOptionsProps> = ({
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-[#f5ecd8]">พิมพ์การ์ด 1 ใบ</span>
+              <span className="text-xs font-bold text-[#f5ecd8]">พิมพ์การ์ด 1 ใบ (แนวนอน)</span>
               {printMode === 'single' && <Check className="w-3.5 h-3.5 text-[#d4af37]" />}
             </div>
             <p className="text-[11px] text-[#baa592] mt-0.5">
-              พิมพ์ขนาดจริงใบเดี่ยว (8.8 × 5.4 ซม.)
+              พิมพ์ขนาดจริงใบเดี่ยว แนวนอน (5.4 × 8.8 ซม.)
             </p>
           </div>
         </button>
