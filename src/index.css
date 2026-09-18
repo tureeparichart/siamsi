@@ -1,0 +1,220 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-serif: 'Noto Serif Thai', serif;
+    --font-sans: 'Bai Jamjuree', 'Sarabun', sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-thai-serif {
+    font-family: var(--font-serif);
+    line-height: 1.42;
+    overflow-wrap: break-word;
+  }
+}
+
+/* Sukhothai Inscription Font Support (PhoKhunRam) */
+@font-face {
+  font-family: 'PhoKhunRam';
+  src: url('/fonts/PhoKhunRam.ttf') format('truetype'),
+       url('/fonts/phokhunram.ttf') format('truetype'),
+       local('PhoKhunRam'),
+       local('Pho Khun Ram');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-phokhunram,
+.font-lai-sue-thai,
+.souvenir-name {
+  font-family: 'PhoKhunRam', 'Charm', 'Noto Serif Thai', serif !important;
+}
+
+/* Custom Gold & Ancient Sukhothai Texture Classes */
+.bg-gold-gradient {
+  background: linear-gradient(135deg, #d4af37 0%, #f3e5ab 30%, #c5a059 70%, #997827 100%);
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #fff3cb 0%, #e6be63 35%, #c89d38 70%, #aa822d 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  padding-top: 0.22em;
+  padding-bottom: 0.12em;
+  line-height: 1.45;
+  overflow: visible;
+}
+
+.text-gold-solid {
+  color: #fae5b6;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 16px rgba(212, 175, 55, 0.3);
+  line-height: 1.4;
+}
+
+.border-gold-gradient {
+  border-image: linear-gradient(135deg, #d4af37, #f7df94, #947228) 1;
+}
+
+.gold-glow {
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.35);
+}
+
+.gold-glow-lg {
+  box-shadow: 0 0 45px rgba(212, 175, 55, 0.45);
+}
+
+/* 3D Chibi Cartoon Sukhothai Theme Utilities */
+.theme-chibi-3d {
+  --chibi-primary: #f59e0b;
+  --chibi-secondary: #e65100;
+  --chibi-accent: #ffd166;
+}
+
+.bg-chibi-3d-pattern {
+  background-color: #1a0f08;
+  background-image: 
+    radial-gradient(circle at 50% 15%, rgba(245, 158, 11, 0.18) 0%, transparent 60%),
+    radial-gradient(circle at 15% 85%, rgba(217, 83, 79, 0.14) 0%, transparent 55%),
+    radial-gradient(circle at 85% 80%, rgba(77, 182, 172, 0.12) 0%, transparent 50%),
+    radial-gradient(circle at 50% 100%, rgba(184, 74, 57, 0.15) 0%, transparent 50%);
+}
+
+/* 3D Tactile Buttons */
+.btn-chibi-3d-gold {
+  border-radius: 1rem;
+  background: linear-gradient(180deg, #ffe082 0%, #ffca28 40%, #f57f17 100%);
+  border-bottom: 5px solid #b26a00;
+  color: #2b1404;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+  transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.btn-chibi-3d-gold:hover {
+  filter: brightness(1.06);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(245, 158, 11, 0.3);
+}
+.btn-chibi-3d-gold:active {
+  transform: translateY(3px);
+  border-bottom-width: 2px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+.btn-chibi-3d-clay {
+  border-radius: 1rem;
+  background: linear-gradient(180deg, #3d2417 0%, #29170e 100%);
+  border: 2px solid #e5a83b;
+  border-bottom: 5px solid #8f580f;
+  color: #fce8ba;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.btn-chibi-3d-clay:hover {
+  background: linear-gradient(180deg, #4d2e1e 0%, #341e12 100%);
+  transform: translateY(-2px);
+}
+.btn-chibi-3d-clay:active {
+  transform: translateY(3px);
+  border-bottom-width: 2px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* 3D Chibi Card Container */
+.card-chibi-3d {
+  border-radius: 1.5rem;
+  background: linear-gradient(180deg, #271810 0%, #170d07 100%);
+  border: 3px solid #e5a83b;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), inset 0 2px 4px rgba(255, 255, 255, 0.15);
+}
+
+/* 3D Chibi Floating animation */
+@keyframes chibi-float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+}
+.animate-chibi-float {
+  animation: chibi-float 3.5s ease-in-out infinite;
+}
+
+/* Sukhothai pattern overlay */
+.bg-sukhothai-pattern {
+  background-color: #16120f;
+  background-image: radial-gradient(circle at 50% 0%, rgba(197, 160, 89, 0.12) 0%, transparent 60%),
+                    radial-gradient(circle at 10% 90%, rgba(155, 61, 43, 0.08) 0%, transparent 50%),
+                    radial-gradient(circle at 90% 90%, rgba(197, 160, 89, 0.06) 0%, transparent 50%);
+}
+
+/* Print Stylesheet for Souvenir Card (Single Card & A4 Multi-card options) */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  /* Single Card Print Mode */
+  body.print-mode-single #print-target-single,
+  body.print-mode-single #print-target-single * {
+    visibility: visible;
+  }
+
+  body.print-mode-single #print-target-single {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 8.8cm !important;
+    max-width: 8.8cm !important;
+    height: 5.4cm !important;
+    max-height: 5.4cm !important;
+    margin: 0 !important;
+    padding: 10px !important;
+    box-shadow: none !important;
+    border: 1.5px solid #8c6d23 !important;
+    background: #fbf7ee !important;
+    color: #2c1810 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    page-break-inside: avoid;
+  }
+
+  /* A4 Multi-card Sheet Print Mode */
+  body.print-mode-a4 #print-target-a4,
+  body.print-mode-a4 #print-target-a4 * {
+    visibility: visible;
+  }
+
+  body.print-mode-a4 #print-target-a4 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 6mm !important;
+    background: #ffffff !important;
+    color: #2c1810 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  @page {
+    margin: 6mm;
+    size: auto;
+  }
+}
+
+

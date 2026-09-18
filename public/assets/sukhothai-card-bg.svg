@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 540" width="880" height="540">
+  <defs>
+    <!-- Background Sky Gradient -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fff8eb"/>
+      <stop offset="30%" stop-color="#faeed6"/>
+      <stop offset="65%" stop-color="#f2dfbe"/>
+      <stop offset="100%" stop-color="#e8cd9e"/>
+    </linearGradient>
+
+    <!-- Sun Glow Gradient -->
+    <radialGradient id="sunGlow" cx="48%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#ffeac2" stop-opacity="0.9"/>
+      <stop offset="35%" stop-color="#ffd599" stop-opacity="0.45"/>
+      <stop offset="70%" stop-color="#f5caa0" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#e8cd9e" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Distant Mountain Gradient -->
+    <linearGradient id="mountGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#d4b88d" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#c4a575" stop-opacity="0.15"/>
+    </linearGradient>
+
+    <linearGradient id="mountGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#be9d68" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#ab8953" stop-opacity="0.2"/>
+    </linearGradient>
+
+    <!-- Midground Stupa & Chedi Silhouette Gradient -->
+    <linearGradient id="chediGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7d592a" stop-opacity="0.75"/>
+      <stop offset="60%" stop-color="#5a3d1b" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#3d2711" stop-opacity="0.9"/>
+    </linearGradient>
+
+    <!-- Main Wat Mahathat Silhouette Gradient -->
+    <linearGradient id="mainHeritageGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#69461d" stop-opacity="0.7"/>
+      <stop offset="50%" stop-color="#4e3314" stop-opacity="0.82"/>
+      <stop offset="100%" stop-color="#2d1c0b" stop-opacity="0.9"/>
+    </linearGradient>
+
+    <!-- Water Pond Gradient -->
+    <linearGradient id="waterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ecd3a6" stop-opacity="0.85"/>
+      <stop offset="35%" stop-color="#e2c490" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#ceab71" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <!-- Ancient Parchment Texture Filter -->
+    <filter id="parchmentNoise" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise"/>
+      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.04 0"/>
+      <feComposite in2="SourceGraphic" in="gl" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Base Canvas -->
+  <rect width="880" height="540" fill="url(#skyGrad)"/>
+
+  <!-- Soft Golden Sun Backdrop -->
+  <circle cx="440" cy="240" r="220" fill="url(#sunGlow)"/>
+
+  <!-- Distant Khao Luang Mountain Range -->
+  <path d="M0 310 Q70 270 150 285 T310 260 T460 275 T620 250 T760 270 T880 260 L880 370 L0 370 Z" fill="url(#mountGrad1)"/>
+  <path d="M0 325 Q110 285 220 305 T450 280 T680 295 T880 280 L880 390 L0 390 Z" fill="url(#mountGrad2)"/>
+
+  <!-- Distant Secondary Chedis and Trees -->
+  <g opacity="0.4">
+    <!-- Left Chedi -->
+    <path d="M120 330 L130 250 L132 230 L134 250 L144 330 Z" fill="#9e7b4c"/>
+    <path d="M105 330 L160 330 L150 310 L115 310 Z" fill="#9e7b4c"/>
+    <!-- Right Stupa -->
+    <path d="M720 325 L732 240 L735 220 L738 240 L750 325 Z" fill="#9e7b4c"/>
+    <!-- Tree silhouettes -->
+    <ellipse cx="60" cy="325" rx="35" ry="20" fill="#a8895b"/>
+    <ellipse cx="200" cy="330" rx="40" ry="22" fill="#a8895b"/>
+    <ellipse cx="670" cy="330" rx="30" ry="18" fill="#a8895b"/>
+    <ellipse cx="800" cy="325" rx="45" ry="24" fill="#a8895b"/>
+  </g>
+
+  <!-- Midground: Wat Mahathat Ancient Architecture Centerpiece -->
+  <!-- Center Main Lotus-Bud Chedi (ทรงพุ่มข้าวบิณฑ์ มรดกเอกลักษณ์สุโขทัย) -->
+  <g opacity="0.65">
+    <!-- Base Terraces -->
+    <rect x="360" y="315" width="160" height="18" rx="2" fill="url(#chediGrad)"/>
+    <rect x="375" y="295" width="130" height="20" rx="2" fill="url(#chediGrad)"/>
+    <rect x="390" y="275" width="100" height="20" rx="2" fill="url(#chediGrad)"/>
+    <!-- Bell Body (องค์ระฆัง) -->
+    <path d="M400 275 C400 240 420 225 440 220 C460 225 480 240 480 275 Z" fill="url(#chediGrad)"/>
+    <!-- Lotus Bud Spire (ยอดพุ่มข้าวบิณฑ์) -->
+    <path d="M430 220 C428 205 435 190 440 170 C445 190 452 205 450 220 Z" fill="url(#chediGrad)"/>
+    <line x1="440" y1="170" x2="440" y2="150" stroke="#5a3d1b" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Flanking Pillars of the Ancient Assembly Hall (เสาศิลาแลง วิหารหลวง) -->
+    <!-- Left Pillars -->
+    <rect x="250" y="270" width="14" height="65" rx="2" fill="url(#chediGrad)"/>
+    <rect x="278" y="260" width="14" height="75" rx="2" fill="url(#chediGrad)"/>
+    <rect x="306" y="250" width="14" height="85" rx="2" fill="url(#chediGrad)"/>
+    <rect x="334" y="245" width="14" height="90" rx="2" fill="url(#chediGrad)"/>
+
+    <!-- Right Pillars -->
+    <rect x="532" y="245" width="14" height="90" rx="2" fill="url(#chediGrad)"/>
+    <rect x="560" y="250" width="14" height="85" rx="2" fill="url(#chediGrad)"/>
+    <rect x="588" y="260" width="14" height="75" rx="2" fill="url(#chediGrad)"/>
+    <rect x="616" y="270" width="14" height="65" rx="2" fill="url(#chediGrad)"/>
+
+    <!-- Ancient Brick Base Wall -->
+    <rect x="230" y="333" width="420" height="15" rx="2" fill="url(#mainHeritageGrad)"/>
+  </g>
+
+  <!-- Serene Seated Buddha Silhouette in the Sanctuary -->
+  <g opacity="0.68">
+    <!-- Meditation Base / Lotus Throne -->
+    <ellipse cx="440" cy="330" rx="42" ry="10" fill="#3d2711"/>
+    <!-- Folded Legs (สมาธิราบ) -->
+    <ellipse cx="440" cy="322" rx="38" ry="12" fill="#4a3016"/>
+    <!-- Torso and Robe -->
+    <path d="M420 320 C416 295 422 280 432 270 C436 265 444 265 448 270 C458 280 464 295 460 320 Z" fill="#4a3016"/>
+    <!-- Hands in Maravijaya posture -->
+    <path d="M424 300 Q435 316 448 316 Q454 316 458 322" stroke="#3d2711" stroke-width="4" stroke-linecap="round" fill="none"/>
+    <!-- Head and Topknot (พระเกศา และ พระเกตุมาลาเปลวเพลิง) -->
+    <circle cx="440" cy="254" r="11" fill="#4a3016"/>
+    <!-- Flame finial (พระเกตุมาลาเปลวเพลิงเอกลักษณ์สุโขทัย) -->
+    <path d="M438 244 C437 236 440 230 440 224 C441 230 444 236 442 244 Z" fill="#4a3016"/>
+  </g>
+
+  <!-- Foreground Ancient Pond (ตระพัง สระน้ำโบราณสุโขทัย) with Reflections -->
+  <path d="M0 348 C150 345 320 348 440 348 C560 348 730 345 880 348 L880 540 L0 540 Z" fill="url(#waterGrad)"/>
+
+  <!-- Pond Shoreline Stone Edge -->
+  <path d="M0 348 Q220 352 440 350 Q660 352 880 348" stroke="#8c6d23" stroke-width="4" fill="none" opacity="0.6"/>
+
+  <!-- Subtle Reflections on Water -->
+  <g opacity="0.25">
+    <ellipse cx="440" cy="380" rx="35" ry="12" fill="#5a3d1b"/>
+    <ellipse cx="440" cy="410" rx="60" ry="16" fill="#5a3d1b"/>
+    <line x1="360" y1="365" x2="520" y2="365" stroke="#ffe5b4" stroke-width="2" opacity="0.6"/>
+    <line x1="380" y1="385" x2="500" y2="385" stroke="#ffe5b4" stroke-width="2" opacity="0.5"/>
+    <line x1="410" y1="405" x2="470" y2="405" stroke="#ffe5b4" stroke-width="1.5" opacity="0.4"/>
+  </g>
+
+  <!-- Delicate Water Lotus Blooms (บัวหลวงสุโขทัย ในตระพัง) -->
+  <g opacity="0.55" transform="translate(140, 430) scale(0.7)">
+    <ellipse cx="30" cy="20" rx="26" ry="10" fill="#8c6d23"/>
+    <path d="M22 18 C20 8 30 0 30 0 C30 0 40 8 38 18 Z" fill="#d4af37"/>
+    <path d="M14 18 C12 10 22 4 22 4 C22 4 28 12 26 18 Z" fill="#b8860b"/>
+    <path d="M46 18 C48 10 38 4 38 4 C38 4 32 12 34 18 Z" fill="#b8860b"/>
+  </g>
+
+  <g opacity="0.55" transform="translate(680, 440) scale(0.65)">
+    <ellipse cx="30" cy="20" rx="26" ry="10" fill="#8c6d23"/>
+    <path d="M22 18 C20 8 30 0 30 0 C30 0 40 8 38 18 Z" fill="#d4af37"/>
+    <path d="M14 18 C12 10 22 4 22 4 C22 4 28 12 26 18 Z" fill="#b8860b"/>
+    <path d="M46 18 C48 10 38 4 38 4 C38 4 32 12 34 18 Z" fill="#b8860b"/>
+  </g>
+
+  <!-- Ancient Sangkhalok Motif Vignette Borders -->
+  <rect x="0" y="0" width="880" height="540" fill="none" stroke="#8c6d23" stroke-width="8" opacity="0.4"/>
+</svg>
